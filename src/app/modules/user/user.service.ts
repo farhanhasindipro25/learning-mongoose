@@ -1,22 +1,13 @@
+import { IUser } from "./user.interface";
 import User from "./user.model";
 
-export const addUserToDB = async () => {
-  const user = new User({
-    id: "779",
-    role: "Admin",
-    name: {
-      firstName: "Farhan",
-      middleName: "Hasin",
-      lastName: "Dipro",
-    },
-    password: "123456",
-    gender: "male",
-    email: "farhan@gmail.com",
-    contactNo: "323",
-    emergencyContactNo: "322",
-    presentAddress: "Lalmatia",
-    permanentAddress: "Lalmatia",
-  });
+export const addUserToDB = async (payload: IUser): Promise<IUser> => {
+  const user = new User(payload);
   await user.save();
   return user;
+};
+
+export const getUsersFromDB = async (): Promise<IUser[]> => {
+  const users = await User.find();
+  return users;
 };
